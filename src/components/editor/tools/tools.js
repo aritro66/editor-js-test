@@ -25,7 +25,37 @@ export const EDITOR_JS_TOOLS = {
   warning: Warning,
   code: Code,
   linkTool: LinkTool,
-  image: Image,
+  image: {
+    class: Image,
+    config: {
+      uploader: {
+        uploadByFile(file) {
+          // your own uploading logic here
+          const form_data = new FormData();
+          form_data.append("img_upload", file);
+          console.log(file);
+          return fetch("http://localhost:4001/api/v1/image/upload", {
+            // headers: {
+            //   // Accept: "application/json",
+            //   "Content-Type": "multipart/form-data",
+            // },
+            method: "POST",
+            body: form_data,
+          })
+            .then((req) => req.json())
+            .then((val) => {
+              return {
+                success: 1,
+                file: {
+                  url: `http://localhost:4001/api/v1/image/${val.data}`,
+                  // any other image data you want to store, such as width, height, color, extension, etc
+                },
+              };
+            });
+        },
+      },
+    },
+  },
   raw: Raw,
   header: Header,
   quote: Quote,
@@ -33,5 +63,5 @@ export const EDITOR_JS_TOOLS = {
   checklist: CheckList,
   delimiter: Delimiter,
   inlineCode: InlineCode,
-  simpleImage: SimpleImage
+  simpleImage: SimpleImage,
 };
