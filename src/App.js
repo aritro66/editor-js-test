@@ -8,6 +8,7 @@ export default function App() {
   const [isEditMode, setIsEditMode] = useState(false);
   const [data, setData] = useState(exampleData);
 
+
   function toggleEditMode() {
     if (isEditMode) {
       setIsEditMode(false);
